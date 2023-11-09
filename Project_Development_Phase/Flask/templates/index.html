@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Recommendation System</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: whitesmoke;
+        }
+
+        /* Heading Section */
+        .heading {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Main Body Section */
+        .main-body {
+            display: flex;
+        }
+
+        /* Left (60%) Side of Main Body */
+        .main-left {
+            flex: 60%;
+            padding: 20px;
+        }
+
+        /* Right (40%) Side of Main Body */
+        .main-right {
+            flex: 40%;
+            padding: 20px;
+        }
+
+        /* Picture Styling */
+        .image-container {
+            width: 100%;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1 class="heading">Restaurant Recommendation System</h1>
+
+<div class="main-body">
+    <!-- Left (70%) Side of Main Body -->
+    <div class="main-left">
+        <h2>About</h2>
+        <p>This Restaurant Recommendation System, created by Devina Goel and Prateek Choudhary, is a user-friendly web application designed to help users discover restaurants that match their preferences based on a given restaurant name. Whether you're a food enthusiast looking for a new dining experience or a traveler in an unfamiliar city, this application is your go-to tool for finding similar restaurants, complete with cost and rating information.</p>
+
+        <h2 style="padding-top: 2%;">Search</h2>
+        <form action="/recommend" method="POST" class="form-description" style="width: 50%;">
+            <label for="restaurant_name" style="width: 50%;">Select a restaurant:</label>
+            <select name="restaurant_name" required style="width: 50%;">
+                {% for restaurant in restaurant_data['name'] %}
+                <option value="{{ restaurant }}">{{ restaurant }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Get Recommendations">
+        </form>
+
+        {% if recommendations %}
+        <h2>Recommendations for {{ restaurant_name }}</h2>
+        <table>
+            <tr>
+                <th>Restaurant Name</th>
+                <th>Cost</th>
+                <th>Rating</th>
+            </tr>
+            {% for recommendation in recommendations %}
+            <tr>
+                <td>{{ recommendation['name'] }}</td>
+                <td>{{ recommendation['cost'] }}</td>
+                <td>{{ recommendation['rate'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+
+    <!-- Right (30%) Side of Main Body -->
+    <div class="main-right">
+        <div class="image-container">
+          <img src="{{ url_for('static', filename='food.avif') }}" alt="Your Image">
+        </div>
+    </div>
+</div>
+</body>
+</html>
